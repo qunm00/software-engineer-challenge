@@ -20,6 +20,7 @@
 ## Assumptions
 
 - The only input user can enter to the program is a wikipedia link. Thus, user can't choose which table and which column to graph.
+- First row indicates the data type of the column. If the first row is numeric, then data type of the column is numeric. Thus, any following rows are not numeric, it will be dropped. If the first row is not numeric, then data type of the column is not numeric. Column will be skipped.
 
 ## Usage
 
@@ -43,4 +44,10 @@ poetry run python app.py
 
 ```python
 poetry run pytest test.py
+```
+
+with coverage
+
+```python
+poetry run pytest --cov-report term-missing --cov=. test.py
 ```

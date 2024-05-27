@@ -36,7 +36,7 @@ def test_should_display_no_tables_found_error_when_no_tables_are_found():
     from app import get_tables
 
     # Given
-    wikipedia_link = "docs/Wikipedia, the free encyclopedia.html"
+    wikipedia_link = "assets/Wikipedia, the free encyclopedia.html"
     expected_output = "No tables found"
     # When
     with pytest.raises(ValueError) as error:
@@ -49,7 +49,9 @@ def test_should_get_tables_from_wikipedia_link():
     from app import get_tables
 
     # Given
-    wikipedia_link = "docs/Women's high jump world record progression - Wikipedia.html"
+    wikipedia_link = (
+        "assets/Women's high jump world record progression - Wikipedia.html"
+    )
     expected_output = 1
     # When
     tables = get_tables(wikipedia_link)
@@ -102,7 +104,7 @@ def test_should_return_the_first_column_with_numeric_data():
     from app import get_numerical_column_from_a_table
 
     # Given
-    table = pd.read_csv("docs/women_high_jump.csv")
+    table = pd.read_csv("assets/women_high_jump.csv")
     expected_output = pd.Series(
         [
             1.460,
@@ -176,7 +178,7 @@ def test_should_return_none_when_no_numeric_column_is_found_in_a_table():
     from app import get_numerical_column_from_a_table
 
     # Given
-    table = pd.read_csv("docs/foreign_relations_macau.csv")
+    table = pd.read_csv("assets/foreign_relations_macau.csv")
     # When
     numerical_column = get_numerical_column_from_a_table(table)
     # Then
@@ -189,7 +191,7 @@ def test_should_return_numeric_column_when_it_is_found_from_a_list_of_tables():
 
     # Given
     tables = get_tables(
-        "docs/Women's high jump world record progression - Wikipedia.html"
+        "assets/Women's high jump world record progression - Wikipedia.html"
     )
     expected_output = pd.Series(
         [
@@ -263,7 +265,7 @@ def test_should_return_none_when_no_numeric_column_is_found_from_a_list_of_table
     from app import get_tables, get_numerical_data_from_a_list_of_tables
 
     # Given
-    tables = get_tables("docs/Foreign relations of Macau - Wikipedia.html")
+    tables = get_tables("assets/Foreign relations of Macau - Wikipedia.html")
     expected_output = "No numerical data found"
     # When
     with pytest.raises(ValueError) as error:

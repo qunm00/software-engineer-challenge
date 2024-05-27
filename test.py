@@ -187,6 +187,19 @@ def test_should_return_the_first_column_with_numeric_data_but_there_a_some_nan_d
     assert numerical_column.equals(expected_output)
 
 
+def test_column_with_first_row_non_numeric_is_not_identified_as_numeric():
+    import pandas as pd
+
+    from app import get_numerical_column_from_a_table
+
+    # Given
+    table = pd.read_csv("assets/table_with_first_column_not_numeric.csv")
+    # When
+    numerical_column = get_numerical_column_from_a_table(table)
+    # Then
+    assert numerical_column is None
+
+
 def test_should_return_none_when_no_numeric_column_is_found_in_a_table():
     import pandas as pd
 

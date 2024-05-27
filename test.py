@@ -68,7 +68,7 @@ def test_extract_numerical_value_from_alpha_numeric_value():
 def test_should_return_the_first_column_with_numeric_data():
     import pandas as pd
 
-    from app import get_numerical_column
+    from app import get_numerical_column_from_a_table
 
     # Given
     table = pd.read_csv("docs/women_high_jump.csv")
@@ -133,20 +133,33 @@ def test_should_return_the_first_column_with_numeric_data():
         ]
     )
     # When
-    numerical_column = get_numerical_column(table)
+    numerical_column = get_numerical_column_from_a_table(table)
     # Then
     assert numerical_column is not None
     assert numerical_column.equals(expected_output)
 
 
-def test_should_return_none_when_no_numeric_column_is_found():
+def test_should_return_none_when_no_numeric_column_is_found_in_a_table():
     import pandas as pd
 
-    from app import get_numerical_column
+    from app import get_numerical_column_from_a_table
 
     # Given
     table = pd.read_csv("docs/foreign_relations_macau.csv")
     # When
-    numerical_column = get_numerical_column(table)
+    numerical_column = get_numerical_column_from_a_table(table)
     # Then
     assert numerical_column is None
+
+
+def test_should_return_none_when_no_numeric_column_is_found_from_a_list_of_tables():
+    from app import get_tables, get_numerical_data_from_a_list_of_tables
+
+    # Given
+    tables = get_tables("docs/Foreign relations of Macau - Wikipedia.html")
+    expected_output = "No numerical data found"
+    # When
+    with pytest.raises(ValueError) as error:
+        get_numerical_data_from_a_list_of_tables(tables)
+    # Then
+    assert str(error.value) == expected_output

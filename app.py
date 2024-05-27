@@ -50,9 +50,9 @@ def extract_numerical_value(alpha_numeric: str | int | float) -> float | None:
     return None
 
 
-def get_numerical_column(table: pd.DataFrame) -> pd.Series | None:
+def get_numerical_column_from_a_table(table: pd.DataFrame) -> pd.Series | None:
     """
-    Get the first numerical column in the tables from a wikipedia link.
+    Get the first numerical column in the table.
 
     - Assumption:
     First row indicates the data type of the column.
@@ -75,7 +75,21 @@ def get_numerical_column(table: pd.DataFrame) -> pd.Series | None:
     return numeric_column
 
 
-def visualize_data(data: pd.Series):
+def get_numerical_data_from_a_list_of_tables(
+    tables: list[pd.DataFrame],
+) -> pd.Series | None:
+    """
+    Get the first numerical column in the tables from a wikipedia link.
+    """
+    for table in tables:
+        numerical_column = get_numerical_column_from_a_table(table)
+        if numerical_column is not None:
+            return numerical_column
+    if numerical_column is None:
+        raise ValueError("No numerical data found")
+
+
+def visualize_data(data: pd.Series | None):
     """
     Graph numerical data from a wikipedia page and export it to a .png file.
     """
@@ -93,13 +107,7 @@ def main():
     tables = get_tables(wikipedia_link)
 
     # Get numerical data
-    numerical_column = None
-    for table in tables:
-        numerical_column = get_numerical_column(table)
-        if numerical_column is not None:
-            break
-    if numerical_column is None:
-        raise ValueError("No numerical data found")
+    numerical_column = get_numerical_data_from_a_list_of_tables(tables)
 
     # Visualize the data
     visualize_data(numerical_column)

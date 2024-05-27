@@ -172,6 +172,21 @@ def test_should_return_the_first_column_with_numeric_data():
     assert numerical_column.equals(expected_output)
 
 
+def test_should_return_the_first_column_with_numeric_data_but_there_a_some_nan_data():
+    import pandas as pd
+
+    from app import get_numerical_column_from_a_table
+
+    # Given
+    table = pd.read_csv("assets/table_with_nan.csv")
+    expected_output = pd.Series([1.460, 1.485, 1.840])
+    # When
+    numerical_column = get_numerical_column_from_a_table(table)
+    # Then
+    assert numerical_column is not None
+    assert numerical_column.equals(expected_output)
+
+
 def test_should_return_none_when_no_numeric_column_is_found_in_a_table():
     import pandas as pd
 
@@ -276,7 +291,7 @@ def test_should_return_none_when_no_numeric_column_is_found_from_a_list_of_table
 
 def test_should_not_generate_graph_if_there_is_no_data(image_diff):
     import pandas as pd
-    from app import get_numerical_column_from_a_table, visualize_data
+    from app import visualize_data
     import os
 
     # Clean up existing test files

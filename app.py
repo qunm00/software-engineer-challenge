@@ -70,7 +70,9 @@ def get_numerical_column_from_a_table(table: pd.DataFrame) -> pd.Series | None:
         first_row = table[column][0]
         if extract_numerical_value(first_row) is None:
             continue
-        numeric_column = table[column].apply(extract_numerical_value)
+        numeric_column = (
+            table[column].apply(extract_numerical_value).dropna().reset_index(drop=True)
+        )
         break
     if numeric_column is None:
         return None

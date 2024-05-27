@@ -3,6 +3,8 @@ import re
 
 import pandas as pd
 
+from matplotlib import pyplot as plt
+
 
 def get_wikipedia_link() -> str:
     wikipedia_link = input("Enter the Wikipedia link: ")
@@ -89,11 +91,19 @@ def get_numerical_data_from_a_list_of_tables(
         raise ValueError("No numerical data found")
 
 
-def visualize_data(data: pd.Series | None):
+def visualize_data(data: pd.Series | None, path: str = ""):
     """
     Graph numerical data from a wikipedia page and export it to a .png file.
     """
-    pass
+    if data is None or data.size == 0:
+        # don't need to raise an error here,
+        # because the error is already raised in get_numerical_data_from_a_list_of_tables
+        return
+
+    fig, ax = plt.subplots()
+    ax.plot(data)
+    ax.set_ylabel(data.name)
+    fig.savefig(path + "visualized_data.png")
 
 
 def main():

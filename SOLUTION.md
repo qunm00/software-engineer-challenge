@@ -10,13 +10,6 @@
 - The program should then plot a graph of the values in the numeric column
 - The graph should be saved as an image file which is the output
 
-## TODOs
-
-- [ ] Write a command line interface to allow user to paste in wikipedia link
-- [ ] Use Pandas' read_html() to get tables from html
-  - Loop through the tables and find the first numerical column
-  - Export the graph of the found numerical column
-
 ## Assumptions
 
 - The only input user can enter to the program is a wikipedia link. Thus, user can't choose which table and which column to graph.
@@ -39,6 +32,8 @@ poetry install
 ```python
 poetry run python app.py
 ```
+
+Visualization will be saved in visualized_data.png
 
 ## Run Tests
 

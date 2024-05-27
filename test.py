@@ -272,3 +272,47 @@ def test_should_return_none_when_no_numeric_column_is_found_from_a_list_of_table
         get_numerical_data_from_a_list_of_tables(tables)
     # Then
     assert str(error.value) == expected_output
+
+
+def test_should_not_generate_graph_if_there_is_no_data(image_diff):
+    import pandas as pd
+    from app import get_numerical_column_from_a_table, visualize_data
+    import os
+
+    # Clean up existing test files
+    if os.path.exists("output/visualized_data.png"):
+        os.remove("output/visualized_data.png")
+
+    # Given
+    numerical_column = None
+    # When
+    visualize_data(numerical_column)
+    # Then
+    assert os.path.exists("output/visualized_data.png") is False
+
+    # Given
+    numerical_column = pd.Series()
+    # When
+    visualize_data(numerical_column)
+    # Then
+    assert os.path.exists("output/visualized_data.png") is False
+
+
+def test_generated_graph(image_diff):
+    import pandas as pd
+    from app import get_numerical_column_from_a_table, visualize_data
+    import os
+
+    # Clean up existing test files
+    if os.path.exists("output/visualized_data.png"):
+        os.remove("output/visualized_data.png")
+
+    # Given
+    table = pd.read_csv("assets/women_high_jump.csv")
+    # When
+    numerical_column = get_numerical_column_from_a_table(table)
+    visualize_data(numerical_column, "output/")
+    image1 = "output/visualized_data.png"
+    # Then
+    image2 = "assets/visualized_data.png"
+    assert image_diff(image1, image2)

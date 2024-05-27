@@ -1,4 +1,35 @@
 import pytest
+from unittest.mock import patch
+
+
+@patch(
+    "app.input",
+    return_value="https://en.wikipedia.org/wiki/Women%27s_high_jump_world_record_progression",
+)
+def test_get_wikipedia_link(self):
+    from app import get_wikipedia_link
+
+    # Given
+    expected_output = (
+        "https://en.wikipedia.org/wiki/Women%27s_high_jump_world_record_progression"
+    )
+    # When
+    wikipedia_link = get_wikipedia_link()
+    # Then
+    assert wikipedia_link == expected_output
+
+
+@patch("app.input", return_value="not a wikipedia link")
+def test_should_return_error_when_wikipedia_link_is_incorrect(self):
+    from app import get_wikipedia_link
+
+    # Given
+    expected_output = "Invalid Wikipedia link. Please provide a valid link starting with 'https://<language>.wikipedia.org/wiki/'"
+    # When
+    with pytest.raises(ValueError) as error:
+        get_wikipedia_link()
+    # Then
+    assert str(error.value) == expected_output
 
 
 def test_should_display_no_tables_found_error_when_no_tables_are_found():

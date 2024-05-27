@@ -110,7 +110,7 @@ def visualize_data(data: pd.Series | None, path: str = ""):
 
 def main():
     """
-    Get the first numerical column in the tables from a wikipedia link, visualize it, and process it.
+    Get the first numerical column in the tables from a wikipedia link and visualize it.
     """
     # Get Wikipedia link from user input
     wikipedia_link = get_wikipedia_link()

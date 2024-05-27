@@ -33,7 +33,8 @@ poetry install
 poetry run python app.py
 ```
 
-Visualization will be saved in visualized_data.png
+Visualization will be saved in `visualized_data.png` in root folder.
+`visualized_data.png` in `assets/` is a fixture for testing.
 
 ## Run Tests
 
@@ -46,3 +47,5 @@ with coverage
 ```python
 poetry run pytest --cov-report term-missing --cov=. test.py
 ```
+
+generated graph will be stored in `output/visualized_data.png`

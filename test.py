@@ -183,6 +183,82 @@ def test_should_return_none_when_no_numeric_column_is_found_in_a_table():
     assert numerical_column is None
 
 
+def test_should_return_numeric_column_when_it_is_found_from_a_list_of_tables():
+    import pandas as pd
+    from app import get_tables, get_numerical_data_from_a_list_of_tables
+
+    # Given
+    tables = get_tables(
+        "docs/Women's high jump world record progression - Wikipedia.html"
+    )
+    expected_output = pd.Series(
+        [
+            1.460,
+            1.485,
+            1.485,
+            1.524,
+            1.552,
+            1.580,
+            1.580,
+            1.595,
+            1.605,
+            1.620,
+            1.650,
+            1.650,
+            1.660,
+            1.660,
+            1.660,
+            1.710,
+            1.720,
+            1.730,
+            1.740,
+            1.750,
+            1.760,
+            1.760,
+            1.770,
+            1.780,
+            1.800,
+            1.810,
+            1.820,
+            1.830,
+            1.840,
+            1.850,
+            1.860,
+            1.870,
+            1.880,
+            1.900,
+            1.910,
+            1.920,
+            1.920,
+            1.940,
+            1.940,
+            1.950,
+            1.960,
+            1.960,
+            1.970,
+            1.970,
+            2.000,
+            2.010,
+            2.010,
+            2.020,
+            2.030,
+            2.030,
+            2.040,
+            2.050,
+            2.070,
+            2.070,
+            2.080,
+            2.090,
+        ]
+    )
+    # When
+    numerical_column = get_numerical_data_from_a_list_of_tables(tables)
+    # Then
+    if numerical_column is None:
+        assert False
+    numerical_column.equals(expected_output)
+
+
 def test_should_return_none_when_no_numeric_column_is_found_from_a_list_of_tables():
     from app import get_tables, get_numerical_data_from_a_list_of_tables
 
